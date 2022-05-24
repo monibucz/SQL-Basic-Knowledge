@@ -1,0 +1,44 @@
+SELECT max(slp) as max
+FROM `bigquery-public-data.noaa_gsod.gsod2021`
+LIMIT 100
+
+SELECT COUNT (temp)
+FROM `bigquery-public-data.noaa_gsod.gsod2021`
+where date >'2021-08-20'
+LIMIT 100
+
+SELECT COUNT (*) as raz
+FROM `bigquery-public-data.noaa_gsod.gsod2021`
+LIMIT 100
+
+SELECT avg(slp) as srednia,
+FROM `bigquery-public-data.noaa_gsod.gsod2021`
+where slp>1011
+LIMIT 100
+
+SELECT avg(slp) as srednia, mo as month
+FROM `bigquery-public-data.noaa_gsod.gsod2021`
+where slp>1011
+group by mo
+LIMIT 100
+
+
+SELECT avg(slp) as srednia, mo as month
+FROM `bigquery-public-data.noaa_gsod.gsod2021`
+where slp>1011
+group by mo
+having avg(slp) >5000
+order by mo
+LIMIT 100
+
+
+SELECT min(min) 
+FROM `bigquery-public-data.noaa_gsod.gsod2021` 
+where flag_min is not null
+LIMIT 1000
+
+SELECT min(count_temp)
+FROM `bigquery-public-data.noaa_gsod.gsod2021` 
+where wban >'9000'
+and flag_min is not null
+LIMIT 1000

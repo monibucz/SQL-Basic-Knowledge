@@ -42,3 +42,56 @@ FROM `bigquery-public-data.noaa_gsod.gsod2021`
 where wban >'9000'
 and flag_min is not null
 LIMIT 1000
+
+
+SELECT max(temp) as maksimum, min(temp) as minimum, max(temp) - min(temp) as roznica
+FROM `bigquery-public-data.noaa_gsod.gsod2021`
+
+SELECT   avg(temp)
+FROM `bigquery-public-data.noaa_gsod.gsod2021`
+where DATE BETWEEN  '2021-02-17' AND '2021-05-03'
+LIMIT 1000
+
+
+SELECT min(temp) as temperatura, slp
+FROM `bigquery-public-data.noaa_gsod.gsod2021`
+where count_slp in (9,12,14)
+group by slp
+having avg(slp)<2000
+order by 2
+LIMIT 1000
+
+SELECT sum(temp) as suma,count_slp,
+FROM `bigquery-public-data.noaa_gsod.gsod2021`
+where count_slp >9 and count_slp<12
+group by count_slp
+order by 2 desc
+LIMIT 1000
+
+SELECT sum(stp)
+FROM `bigquery-public-data.noaa_gsod.gsod2021`
+where mo='04'
+LIMIT 1000
+
+
+
+SELECT max(prcp) as p,
+min(min) as m,
+count(mxpsd) as mx,
+FROM `bigquery-public-data.noaa_gsod.gsod2021`
+where temp > 65 and temp <=81.9
+LIMIT 1000
+
+SELECT stn,  sum(dewp), 
+FROM `bigquery-public-data.noaa_gsod.gsod2021`
+group by stn
+having sum(dewp) <1000;
+
+
+SELECT min(slp) as srednia, mo as month
+FROM `bigquery-public-data.noaa_gsod.gsod2021`
+where slp<50
+group by mo
+having min(slp) <10
+order by mo
+LIMIT 100

@@ -95,3 +95,8 @@ group by mo
 having min(slp) <10
 order by mo
 LIMIT 100
+
+SELECT sum(visib), 
+FROM `bigquery-public-data.noaa_gsod.gsod2021`
+where count_temp >10
+LIMIT 1000

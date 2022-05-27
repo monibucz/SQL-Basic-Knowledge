@@ -121,3 +121,10 @@ where Date <> "2021-04-25" AND DATE <> "2021-03-12"
 group by mxpsd
 Order by 1
 LIMIT 10
+
+SELECT g.temp, s.name, g.wban
+FROM `bigquery-public-data.noaa_gsod.gsod2021` as g
+inner join `bigquery-public-data.noaa_gsod.stations`  as s
+on g.wban = s.wban
+order by g.temp
+LIMIT 10

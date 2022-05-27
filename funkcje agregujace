@@ -113,3 +113,11 @@ SELECT   avg(dewp),
 FROM `bigquery-public-data.noaa_gsod.gsod2021`
 group by dewp
 having sum(dewp) <500;
+
+
+SELECT min(temp) as max, max(mxpsd) as min, 
+FROM `bigquery-public-data.noaa_gsod.gsod2021`
+where Date <> "2021-04-25" AND DATE <> "2021-03-12"
+group by mxpsd
+Order by 1
+LIMIT 10

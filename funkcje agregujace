@@ -100,3 +100,16 @@ SELECT sum(visib),
 FROM `bigquery-public-data.noaa_gsod.gsod2021`
 where count_temp >10
 LIMIT 1000
+
+SELECT sum(temp), mxpsd, 
+FROM `bigquery-public-data.noaa_gsod.gsod2021`
+where Date >= "2021-03-13" AND DATE < "2021-12-05"
+group by mxpsd
+Order by 2
+LIMIT 1000
+
+
+SELECT   avg(dewp), 
+FROM `bigquery-public-data.noaa_gsod.gsod2021`
+group by dewp
+having sum(dewp) <500;

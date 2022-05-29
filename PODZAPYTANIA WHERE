@@ -1,0 +1,63 @@
+PODZAPYTANIA WHERE 
+
+SELECT year, temp, visib
+FROM `bigquery-public-data.noaa_gsod.gsod2021` as ft
+where visib < (select avg(visib) from `bigquery-public-data.noaa_gsod.gsod2021` as st
+where st.temp = ft.temp)
+LIMIT 10
+
+SELECT ft.temp, visib,
+FROM `bigquery-public-data.noaa_gsod.gsod2021` as ft
+where visib in (select visib from `bigquery-public-data.noaa_gsod.stations` as st
+where  st.name LIKE '%POD%')
+LIMIT 100 ??????????????????????????????????????????????????
+
+SELECT temp, count_temp
+FROM `bigquery-public-data.noaa_gsod.gsod2021`
+where temp > (select 2* MIN(count_temp) from `bigquery-public-data.noaa_gsod.gsod2021`)
+LIMIT 100
+
+SELECT stn, wban, temp  
+FROM `bigquery-public-data.noaa_gsod.gsod2021` as ft
+where temp < (select avg(temp) from `bigquery-public-data.noaa_gsod.stations` as st 
+where st.wban = ft.wban)
+LIMIT 10
+
+SELECT stn, stp
+FROM `bigquery-public-data.noaa_gsod.gsod2021`
+where visib in (select max(visib) from `bigquery-public-data.noaa_gsod.gsod2021` 
+group by stn)
+LIMIT 1000
+
+SELECT stn as ID, visib as V, temp as t
+FROM `bigquery-public-data.noaa_gsod.gsod2021` 
+where temp > (select avg(temp) FROM `bigquery-public-data.noaa_gsod.gsod2021`)
+order by ID, V
+LIMIT 1000
+
+
+SELECT stn as ID, stp as s, visib as V, temp as t
+FROM `bigquery-public-data.noaa_gsod.gsod2021` 
+where temp IN (select max(temp) FROM `bigquery-public-data.noaa_gsod.gsod2021`
+group by stn)
+order by temp desc
+LIMIT 1000 
+
+
+SELECT stn, temp, wdsp FROM `bigquery-public-data.noaa_gsod.gsod2021`
+where wdsp = (select max(wdsp)  FROM `bigquery-public-data.noaa_gsod.gsod2021`)
+order by stn
+LIMIT 100
+
+
+SELECT s.usaf as u, s.name as n, s.wban as w 
+FROM `bigquery-public-data.noaa_gsod.stations` as s 
+where s.wban = (select g.wban,
+FROM `bigquery-public-data.noaa_gsod.gsod2021` as g
+group by g.wban)
+LIMIT 10
+
+SELECT usaf as u, name as n FROM `bigquery-public-data.noaa_gsod.stations`
+where lat<= (select lon from `bigquery-public-data.noaa_gsod.stations` where lon < 2*lat)
+group by u,n
+LIMIT 100

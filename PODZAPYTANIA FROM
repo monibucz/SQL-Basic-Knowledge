@@ -1,0 +1,14 @@
+PODZAPYTANIA FROM
+
+
+SELECT  temp, mo FROM 
+(select temp, mo from `bigquery-public-data.noaa_gsod.gsod2021`) as tab1
+WHERE temp > 45
+LIMIT 100
+
+
+SELECT avg(suma) FROM 
+(select SUM(temp) as suma FROM `bigquery-public-data.noaa_gsod.gsod2021`) as tab
+LIMIT 1000
+
+

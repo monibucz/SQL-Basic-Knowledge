@@ -12,3 +12,52 @@ SELECT avg(suma) FROM
 LIMIT 1000
 
 
+SELECT suma FROM 
+(select avg(temp), visib as suma FROM `bigquery-public-data.noaa_gsod.gsod2021` group by visib) as srednia
+LIMIT 100
+
+
+SELECT srednia_temp FROM (select count(*) as srednia_temp from `bigquery-public-data.noaa_gsod.gsod2021` group by temp 
+having srednia_temp > 35);
+
+SELECT wartosc_temp, mo
+FROM (select mo, temp as wartosc_temp from `bigquery-public-data.noaa_gsod.gsod2021`) as tabela 
+where wartosc_temp >=80
+order by wartosc_temp desc
+LIMIT 1000 
+
+
+SELECT srednia_temp, tab1.wdsp, tab1.mo 
+FROM (select mo, wdsp, avg(temp) as srednia_temp from  `bigquery-public-data.noaa_gsod.gsod2021` group by wdsp, mo) as tab1
+join `bigquery-public-data.noaa_gsod.gsod2021` tab2 on tab1.wdsp = tab2.wdsp
+LIMIT 100
+
+
+SELECT numer, name FROM 
+(select count(*) as numer,name from `bigquery-public-data.noaa_gsod.stations` 
+group by name) as tab1
+where name LIKE 'WXP%'
+order by numer
+LIMIT 100 ////// jak zmienic numer na 123 nie 11111 ????
+
+
+SELECT stacja, usaf FROM 
+(select count(name) as stacja,usaf from `bigquery-public-data.noaa_gsod.stations` 
+group by usaf) as tab1
+where usaf LIKE '001%'
+order by usaf
+LIMIT 100
+
+
+SELECT srednia_temp, wban FROM 
+(select wban, avg(temp) as srednia_temp from  `bigquery-public-data.noaa_gsod.gsod2021`
+group by wban) tab1
+order by wban asc
+LIMIT 100
+
+
+SELECT wartosc_minimalna, temp, wdsp FROM 
+(select min(min) as wartosc_minimalna, temp, wdsp from  `bigquery-public-data.noaa_gsod.gsod2021`
+group by temp, wdsp) tab1
+order by wdsp desc
+LIMIT 100
